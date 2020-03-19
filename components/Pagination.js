@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';
 import { perPage } from '../config';
+import Error from './ErrorMessage';
 
 const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
@@ -20,11 +21,12 @@ const Pagination = props => (
   <Query query={PAGINATION_QUERY}>
     {({ data, loading, error }) => {
       if (loading) return <p>Loading...</p>;
-      const count = data.itemsConnection.aggregate.count;
+      if (error) return <Error error={error} />;
+      const count = data.itemsConnection.aggregate.count
       const pages = Math.ceil(count / perPage);
       const page = props.page;
       return (
-        <PaginationStyles>
+        <PaginationStyles data-test="pagination">
           <Head>
             <title>
               Sick Fits! — Page {page} of {pages}
@@ -42,7 +44,8 @@ const Pagination = props => (
             </a>
           </Link>
           <p>
-            Page {props.page} of {pages}!
+            Page {props.page} of
+            <span className="totalPages">{pages}</span>!
           </p>
           <p>{count} Items Total</p>
           <Link
@@ -52,7 +55,7 @@ const Pagination = props => (
               query: { page: page + 1 },
             }}
           >
-            <a className="prev" aria-disabled={page >= pages}>
+            <a className="next" aria-disabled={page >= pages}>
               Next →
             </a>
           </Link>
@@ -63,3 +66,4 @@ const Pagination = props => (
 );
 
 export default Pagination;
+export { PAGINATION_QUERY };

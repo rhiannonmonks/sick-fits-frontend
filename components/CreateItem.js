@@ -30,8 +30,8 @@ class CreateItem extends Component {
   state = {
     title: 'Cool Shoes',
     description: 'I love those shoes',
-    image: 'dog.jpg',
-    largeImage: 'large-dog.jpg',
+    image_DESC: 'dog.jpg',
+    largeImage_DESC: 'large-dog.jpg',
     price: 1000,
   };
   handleChange = e => {
@@ -47,7 +47,7 @@ class CreateItem extends Component {
     data.append('file', files[0]);
     data.append('upload_preset', 'sickfits');
 
-    const res = await fetch('https://api.cloudinary.com/v1_1/rhiannonmonks/image/upload', {
+    const res = await fetch('https://api.cloudinary.com/v1_1/wesbostutorial/image/upload', {
       method: 'POST',
       body: data,
     });
