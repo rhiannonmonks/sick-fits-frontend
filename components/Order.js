@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
@@ -43,7 +42,7 @@ class Order extends React.Component {
           if (loading) return <p>Loading...</p>;
           const order = data.order;
           return (
-            <OrderStyles>
+            <OrderStyles data-test="order">
               <Head>
                 <title>Sick Fits - Order {order.id}</title>
               </Head>
@@ -90,3 +89,4 @@ class Order extends React.Component {
 }
 
 export default Order;
+export { SINGLE_ORDER_QUERY };
